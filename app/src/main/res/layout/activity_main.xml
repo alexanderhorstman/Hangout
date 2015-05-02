@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:onClick="createNewAccount"
-        android:text="@string/create_new_account_button_text"/>
+        android:text="@string/create_new_account_button_text"
+        android:longClickable="true" />
 
 </LinearLayout>

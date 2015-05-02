@@ -1,6 +1,8 @@
 package com.example.alexh.hangout;
 
-public class Profile {
+import java.io.Serializable;
+
+public class Profile implements Serializable{
     private boolean available;
     private boolean online;
     private boolean[] schedule;

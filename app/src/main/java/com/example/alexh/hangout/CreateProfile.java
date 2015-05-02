@@ -2,6 +2,7 @@ package com.example.alexh.hangout;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -46,7 +47,7 @@ public class CreateProfile extends Activity{
             users = (ArrayList) usersInput.readObject();
             usersInput.close();
         }
-        catch(FileNotFoundException e){
+        catch(FileNotFoundException e) {
             //create new file
             File usersFile = new File(this.getFilesDir().getAbsolutePath(), usersFileName);
             //try to create a new file, quit if system cannot create new file
@@ -69,10 +70,12 @@ public class CreateProfile extends Activity{
         catch(Exception f) {
         }
         //check each user in the list
-        for(Profile user : users) {
-            //if emails match, then email is not available
-            if(user.getEmailAddress().equals(email)) {
-                return false;
+        if(users.size() > 0) {
+            for (int i = 0; i < users.size(); i++) {
+                //if emails match, then email is not available
+                if (users.get(i).getEmailAddress().equals(email)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -90,9 +93,18 @@ public class CreateProfile extends Activity{
     //move to create schedule activity
     public void moveToCreateSchedule(View view) {
         //check to make sure the email is not taken
-        if(!checkEmailAvailability(holder.emailEditText.getText().toString())) {
+        if(holder.firstNameEditText.getText().toString().equals("")) {
+            Toast.makeText(this, "First name cannot be blank", Toast.LENGTH_LONG).show();
+        }
+        else if(holder.lastNameEditText.getText().toString().equals("")) {
+            Toast.makeText(this, "Last name cannot be blank", Toast.LENGTH_LONG).show();
+        }
+        else if(!checkEmailAvailability(holder.emailEditText.getText().toString())) {
             Toast.makeText(this, "Email address has already been used. Please use a different "
                     + "email.", Toast.LENGTH_LONG).show();
+        }
+        else if(holder.passwordEditText.getText().toString().equals("")) {
+            Toast.makeText(this, "Password cannot be blank", Toast.LENGTH_LONG).show();
         }
         else if(!(holder.passwordEditText.getText().toString().
                 equals(holder.confirmPasswordEditText.getText().toString()))) {
@@ -104,17 +116,16 @@ public class CreateProfile extends Activity{
             String lastName = holder.lastNameEditText.getText().toString();
             String password = holder.passwordEditText.getText().toString();
             Profile newProfile = new Profile(email, firstName, lastName, password);
-            users.add(newProfile);
-            if(!saveUsersToFile()) {
-                Toast.makeText(this, "Profile could not be saved. Try again later",
-                        Toast.LENGTH_LONG).show();
-            }
+            Intent createSchedule = new Intent(this, CreateSchedule.class);
+            createSchedule.putExtra("profileInProgress", newProfile);
+            startActivity(createSchedule);
         }
     }
 
     private boolean saveUsersToFile() {
         try {
             usersOutput = new ObjectOutputStream(openFileOutput(usersFileName, Context.MODE_PRIVATE));
+            usersOutput.writeObject(users);
         }
         catch(Exception e) {
             e.printStackTrace();

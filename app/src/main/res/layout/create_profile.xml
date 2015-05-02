@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff838383"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight=".1">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_new_profile_title"
+            android:textSize="35sp"
+            android:textColor="#ff52b805"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_title"
+            android:textSize="25sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords|textPersonName"
+                android:layout_weight="1"
+                android:hint="@string/first_name_title"
+                android:background="#ffffffff"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/first_name_edit_text_create_profile"
+                android:imeOptions="actionNext"/> <!--nextFocusForward not working. not finding last_name_edit_text_create_profile -->
+
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords|textPersonName"
+                android:layout_weight="1"
+                android:hint="@string/last_name_title"
+                android:background="#ffffffff"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:id="@+id/last_name_edit_text_create_profile"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_address_title"
+            android:textSize="25sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email_address_title"
+            android:background="#ffffffff"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:id="@+id/email_edit_text_create_profile"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password_title"
+            android:textSize="25sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/password_title"
+            android:background="#ffffffff"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:id="@+id/password_edit_text_create_profile"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/confirm_password_title"
+            android:textSize="25sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/password_title"
+            android:background="#ffffffff"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:id="@+id/confirm_password_edit_text_create_profile"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_weight=".5">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_string"
+            android:id="@+id/cancel_button_create_profile"
+            android:onClick="returnToMainActivityWithCancel"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/next_string"
+            android:id="@+id/next_button_create_profile"
+            android:onClick="moveToCreateSchedule"/>
+
+        </LinearLayout>
+
+</LinearLayout>

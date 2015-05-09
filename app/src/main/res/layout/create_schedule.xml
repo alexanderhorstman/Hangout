@@ -7,9 +7,23 @@
     android:background="#ff838383"
     android:padding="10dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Schedule"
+        android:textSize="30sp"
+        android:textColor="#ff52b805"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#ff2d2d2d"
+        android:paddingTop="20dp"/>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:fillViewport="true"
         android:layout_weight="8">
 
         <LinearLayout
@@ -25,35 +39,76 @@
                 android:textSize="20sp"/>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sunday_text_view_create_schedule"
+                android:text=""/>
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/monday_text_view_initial_create_schedule"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/monday_text_view_create_schedule"
+                android:text=""/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tuesday_text_view_initial_create_schedule"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tuesday_text_view_create_schedule"
+                android:text=""/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/wednesday_text_view_initial_create_schedule"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/wednesday_text_view_create_schedule"
+                android:text=""/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/thursday_text_view_initial_create_schedule"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/thursday_text_view_create_schedule"
+                android:text=""/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/friday_text_view_initial_create_schedule"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/friday_text_view_create_schedule"
+                android:text=""/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -61,39 +116,86 @@
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/saturday_text_view_create_schedule"
+                android:text=""/>
+
         </LinearLayout>
         
     </ScrollView>
 
-    <TextView
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#ff2d2d2d"
+        android:paddingTop="20dp"/>
+
+    <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pick the start time and stop time for your free time."
-        android:textSize="15sp"
-        android:paddingTop="10dp"
-        android:layout_gravity="center"/>
+        android:id="@+id/day_of_week_spinner_create_profile"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From"
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:textColor="#ff52b805"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To"
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:textColor="#ff52b805"
+            android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Time"
+            android:text="@string/start_time_button_text_create_schedule"
             android:layout_weight="1"
             android:layout_marginRight="5dp"
-            android:id="@+id/start_time_button_create_schedule"/>
+            android:id="@+id/start_time_button_create_schedule"
+            android:onClick="pickStartTime"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop Time"
+            android:text="@string/stop_time_button_text_create_schedule"
             android:layout_weight="1"
-            android:id="@+id/stop_time_button_create_schedule"/>
+            android:id="@+id/stop_time_button_create_schedule"
+            android:onClick="pickStopTime"/>
 
         </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_button_text_create_schedule"
+        android:layout_gravity="center_horizontal"
+        android:onClick="addTimeToSchedule"/>
 
     <LinearLayout
         android:layout_width="match_parent"

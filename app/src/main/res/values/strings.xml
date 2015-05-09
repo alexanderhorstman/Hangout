@@ -16,4 +16,11 @@
     <string name="confirm_password_title">Confirm Password</string>
     <string name="cancel_string">Cancel</string>
     <string name="next_string">Next</string>
+    <string name="sunday_text_view_initial_create_schedule">Sunday:</string>
+    <string name="monday_text_view_initial_create_schedule">\nMonday:</string>
+    <string name="tuesday_text_view_initial_create_schedule">\nTuesday:</string>
+    <string name="wednesday_text_view_initial_create_schedule">\nWednesday:</string>
+    <string name="thursday_text_view_initial_create_schedule">\nThursday:</string>
+    <string name="friday_text_view_initial_create_schedule">\nFriday:</string>
+    <string name="saturday_text_view_initial_create_schedule">\nSaturday:</string>
 </resources>

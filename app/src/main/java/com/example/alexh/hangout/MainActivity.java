@@ -92,6 +92,5 @@ public class MainActivity extends Activity {
 
     public void signInAttempt(View view) {
         Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
-        setContentView(R.layout.create_schedule);
     }
 }

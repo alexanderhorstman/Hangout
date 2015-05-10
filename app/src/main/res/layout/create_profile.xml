@@ -65,7 +65,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:id="@+id/first_name_edit_text_create_profile"
-                android:imeOptions="actionNext"/> <!--nextFocusForward not working. not finding last_name_edit_text_create_profile -->
+                android:imeOptions="actionNext"/>
 
 
             <View

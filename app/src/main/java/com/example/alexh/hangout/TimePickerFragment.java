@@ -14,6 +14,7 @@ public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener{
 
     private String time;
+    private String type;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -30,7 +31,12 @@ public class TimePickerFragment extends DialogFragment
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Toast.makeText(getActivity(), hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
+        boolean isAm = true;
+        TextView fromTextView = (TextView) getActivity().findViewById(R.id.from_text_view_create_schedule);
+        TextView toTextView = (TextView) getActivity().findViewById(R.id.to_text_view_create_schedule);
+        if(hourOfDay > 11) {
+            isAm = false;
+        }
         if(hourOfDay > 12) {
             hourOfDay -= 12;
         }
@@ -43,5 +49,27 @@ public class TimePickerFragment extends DialogFragment
         else {
             time = hourOfDay + ":" + minute;
         }
+        if(type.equals("start")) {
+            fromTextView.setText(time);
+            if(isAm) {
+                fromTextView.append(" am");
+            }
+            else {
+                fromTextView.append(" pm");
+            }
+        }
+        else if(type.equals("stop")) {
+            toTextView.setText(time);
+            if(isAm) {
+                toTextView.append(" am");
+            }
+            else {
+                toTextView.append(" pm");
+            }
+        }
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

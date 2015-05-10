@@ -9,8 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class CreateSchedule extends Activity implements AdapterView.OnItemSelectedListener{
+public class CreateSchedule extends Activity implements AdapterView.OnItemSelectedListener {
 
     static final String[] validTimes = {"12:00 - 12:30", "12:30 - 1:00", "1:00 - 1:30",
             "1:30 - 2:00", "2:00 - 2:30","2:30 - 3:00", "3:00 - 3:30", "3:30 - 4:00",
@@ -19,7 +20,7 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
             "9:00 - 9:30", "9:30 - 10:00","10:00 - 10:30", "10:30 - 11:00", "11:00 - 11:30",
             "11:30 - 12:00"};
     private boolean[][] freeTime = new boolean[48][7];
-    private int dayOfWeek;
+    private String dayOfWeek = "Sunday";
     private TimePickerFragment startPickerFragment;
     private TimePickerFragment stopPickerFragment;
 
@@ -44,36 +45,44 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
 
     public void addTimeToSchedule(View view) {
         TextView newText = new TextView(getBaseContext());
-        Button startButton = (Button) findViewById(R.id.start_time_button_create_schedule);
-        Button stopButton = (Button) findViewById(R.id.stop_time_button_create_schedule);
+        TextView fromTextView = (TextView) findViewById(R.id.from_text_view_create_schedule);
+        TextView toTextView = (TextView) findViewById(R.id.to_text_view_create_schedule);
         switch (dayOfWeek) {
-            case 0:
+            case "Sunday":
                 newText = (TextView) findViewById(R.id.sunday_text_view_create_schedule);
                 break;
-            case 1:
+            case "Monday":
                 newText = (TextView) findViewById(R.id.monday_text_view_create_schedule);
                 break;
-            case 2:
+            case "Tuesday":
                 newText = (TextView) findViewById(R.id.tuesday_text_view_create_schedule);
                 break;
-            case 3:
+            case "Wednesday":
                 newText = (TextView) findViewById(R.id.wednesday_text_view_create_schedule);
                 break;
-            case 4:
+            case "Thursday":
                 newText = (TextView) findViewById(R.id.thursday_text_view_create_schedule);
                 break;
-            case 5:
+            case "Friday":
                 newText = (TextView) findViewById(R.id.friday_text_view_create_schedule);
                 break;
-            case 6:
+            case "Saturday":
                 newText = (TextView) findViewById(R.id.saturday_text_view_create_schedule);
                 break;
         }
-        newText.append(startPickerFragment.getTime() + " - " + stopPickerFragment.getTime() + ";");
+        newText.append(startPickerFragment.getTime() + " - " + stopPickerFragment.getTime() + ";  ");
+        fromTextView.setText("From");
+        toTextView.setText("To");
     }
 
+    public void finishProfile(View view) {
+
+    }
+
+    //method not being called when item is selected
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        dayOfWeek = position;
+        dayOfWeek = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), position, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -82,11 +91,13 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
 
     public void pickStartTime(View v) {
         startPickerFragment = new TimePickerFragment();
+        startPickerFragment.setType("start");
         startPickerFragment.show(getFragmentManager(), "startPicker");
     }
 
     public void pickStopTime(View v) {
         stopPickerFragment = new TimePickerFragment();
+        stopPickerFragment.setType("stop");
         stopPickerFragment.show(getFragmentManager(), "stopPicker");
     }
 

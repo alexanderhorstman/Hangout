@@ -153,7 +153,8 @@
             android:textSize="25sp"
             android:layout_weight="1"
             android:textColor="#ff52b805"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:id="@+id/from_text_view_create_schedule"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -161,7 +162,8 @@
             android:textSize="25sp"
             android:layout_weight="1"
             android:textColor="#ff52b805"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:id="@+id/to_text_view_create_schedule"/>
 
         </LinearLayout>
 
@@ -217,7 +219,8 @@
             android:id="@+id/next_button_create_schedule"
             android:text="Done"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="finishProfile"/>
 
     </LinearLayout>
 

@@ -20,6 +20,8 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
             "11:30 - 12:00"};
     private boolean[][] freeTime = new boolean[48][7];
     private int dayOfWeek;
+    private TimePickerFragment startPickerFragment;
+    private TimePickerFragment stopPickerFragment;
 
     @Override
     public void onBackPressed() {
@@ -67,7 +69,7 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
                 newText = (TextView) findViewById(R.id.saturday_text_view_create_schedule);
                 break;
         }
-        newText.append(startButton.getText().toString() + " - " + stopButton.getText().toString() + ";");
+        newText.append(startPickerFragment.getTime() + " - " + stopPickerFragment.getTime() + ";");
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -79,13 +81,13 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
     }
 
     public void pickStartTime(View v) {
-        DialogFragment pickerFragment = new TimePickerFragment();
-        pickerFragment.show(getFragmentManager(), "startPicker");
+        startPickerFragment = new TimePickerFragment();
+        startPickerFragment.show(getFragmentManager(), "startPicker");
     }
 
     public void pickStopTime(View v) {
-        DialogFragment pickerFragment = new TimePickerFragment();
-        pickerFragment.show(getFragmentManager(), "stopPicker");
+        stopPickerFragment = new TimePickerFragment();
+        stopPickerFragment.show(getFragmentManager(), "stopPicker");
     }
 
     public void returnToCreateProfile(View view) {

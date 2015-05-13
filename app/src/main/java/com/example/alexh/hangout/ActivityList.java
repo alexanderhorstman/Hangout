@@ -9,6 +9,8 @@ public class ActivityList {
 
     public ActivityList() {
         schedule = new ArrayList<>();
+        ScheduleActivity defaultActivity = new ScheduleActivity(999, 999, 0, 0, "default");
+        schedule.add(defaultActivity);
     }
 
     public void addActivity(ScheduleActivity activity) {
@@ -17,7 +19,8 @@ public class ActivityList {
             while(activity.getStartHour() > schedule.get(position).getStartHour()) {
                 position++;
             }
-            while(activity.getStartMinute() > schedule.get(position).getStartMinute()) {
+            while(activity.getStartMinute() > schedule.get(position).getStartMinute()
+                    && activity.getStartHour() == schedule.get(position).getStartHour()) {
                 position++;
             }
             schedule.add(position, activity);

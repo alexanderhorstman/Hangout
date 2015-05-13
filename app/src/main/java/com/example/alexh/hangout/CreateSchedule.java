@@ -37,22 +37,23 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_schedule);
         listArray = new ListView[7];
-        //listArray[0] = (ListView) findViewById(R.id.);
-        //listArray[1] = (ListView) findViewById(R.id.);
-        //listArray[2] = (ListView) findViewById(R.id.);
-        //listArray[3] = (ListView) findViewById(R.id.);
-        //listArray[4] = (ListView) findViewById(R.id.);
-        //listArray[5] = (ListView) findViewById(R.id.);
-        //listArray[6] = (ListView) findViewById(R.id.);
+        listArray[0] = (ListView) findViewById(R.id.sun_list_view);
+        listArray[1] = (ListView) findViewById(R.id.mon_list_view);
+        listArray[2] = (ListView) findViewById(R.id.tue_list_view);
+        listArray[3] = (ListView) findViewById(R.id.wed_list_view);
+        listArray[4] = (ListView) findViewById(R.id.thu_list_view);
+        listArray[5] = (ListView) findViewById(R.id.fri_list_view);
+        listArray[6] = (ListView) findViewById(R.id.sat_list_view);
         activityArray = new ActivityList[7];
         adapter = new ListAdapter[7];
         for(int i = 0; i < listArray.length; i++) {
+            activityArray[i] = new ActivityList();
             adapter[i] = new ListAdapter(this, activityArray[i].toStringArray(), activityArray[i]);
             listArray[i].setAdapter(adapter[i]);
             listArray[i].setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                    //pull up the create activity fragment
                 }
             });
         }

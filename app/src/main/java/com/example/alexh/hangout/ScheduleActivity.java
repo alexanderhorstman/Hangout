@@ -8,8 +8,13 @@ public class ScheduleActivity {
     int stopMinute;
     String description;
 
-    public ScheduleActivity( String description) {
+    public ScheduleActivity(int startHour, int startMinute, int stopHour, int stopMinute,
+                            String description) {
         this.description = description;
+        this.startHour = startHour;
+        this.startMinute = startMinute;
+        this.stopHour = stopHour;
+        this.stopMinute = stopMinute;
     }
 
     public String getDescription() {
@@ -53,7 +58,13 @@ public class ScheduleActivity {
     }
 
     public String toString() {
-        return description + ":\n" + startHour + ":" + startMinute + "\nto\n" + stopHour + ":"
-                + stopMinute;
+        if(description.equals("default")) {
+            return "+ New Activity";
+        }
+        else {
+            return description + ":\n" + startHour + ":" + startMinute + "\nto\n" + stopHour + ":"
+                    + stopMinute;
+        }
+
     }
 }

@@ -80,49 +80,56 @@
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/sun_list_view"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/mon_list_view"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/tue_list_view"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/wed_list_view"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/thu_list_view"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/fri_list_view"/>
 
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:divider="#ff000000"
             android:dividerHeight="1dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:id="@+id/sat_list_view"/>
 
         </LinearLayout>
 

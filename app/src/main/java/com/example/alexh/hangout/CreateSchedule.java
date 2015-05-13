@@ -1,14 +1,18 @@
 package com.example.alexh.hangout;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class CreateSchedule extends Activity implements AdapterView.OnItemSelectedListener {
+public class CreateSchedule extends FragmentActivity implements AdapterView.OnItemSelectedListener {
 
     static final String[] validTimes = {"12:00 - 12:30", "12:30 - 1:00", "1:00 - 1:30",
             "1:30 - 2:00", "2:00 - 2:30","2:30 - 3:00", "3:00 - 3:30", "3:30 - 4:00",
@@ -22,7 +26,30 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
     private TimePickerFragment stopPickerFragment;
     private ListAdapter[] adapter;
     private ListView[] listArray;
-    private ActivityList[] activityArray;
+    private ActivityList[] activityListArray;
+    private ActivityList sunActivityList;
+    private ActivityList monActivityList;
+    private ActivityList tueActivityList;
+    private ActivityList wedActivityList;
+    private ActivityList thuActivityList;
+    private ActivityList friActivityList;
+    private ActivityList satActivityList;
+    private ListView sunListView;
+    private ListView monListView;
+    private ListView tueListView;
+    private ListView wedListView;
+    private ListView thuListView;
+    private ListView friListView;
+    private ListView satListView;
+    private ListAdapter sunAdapter;
+    private ListAdapter monAdapter;
+    private ListAdapter tueAdapter;
+    private ListAdapter wedAdapter;
+    private ListAdapter thuAdapter;
+    private ListAdapter friAdapter;
+    private ListAdapter satAdapter;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
 
     @Override
     public void onBackPressed() {
@@ -35,7 +62,19 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        CreateScheduleFragment scheduleFragment = new CreateScheduleFragment();
+        fragmentTransaction.replace(android.R.id.content, scheduleFragment);
+        fragmentTransaction.commit();
+        */
         setContentView(R.layout.create_schedule);
+        View tempView = findViewById(R.id.create_activity_fragment);
+        tempView.setVisibility(View.GONE);
+        initializeAll();
+
+        /*
         listArray = new ListView[7];
         listArray[0] = (ListView) findViewById(R.id.sun_list_view);
         listArray[1] = (ListView) findViewById(R.id.mon_list_view);
@@ -44,19 +83,23 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
         listArray[4] = (ListView) findViewById(R.id.thu_list_view);
         listArray[5] = (ListView) findViewById(R.id.fri_list_view);
         listArray[6] = (ListView) findViewById(R.id.sat_list_view);
-        activityArray = new ActivityList[7];
+        activityListArray = new ActivityList[7];
         adapter = new ListAdapter[7];
         for(int i = 0; i < listArray.length; i++) {
-            activityArray[i] = new ActivityList();
-            adapter[i] = new ListAdapter(this, activityArray[i].toStringArray(), activityArray[i]);
+            final int index = i;
+            activityListArray[i] = new ActivityList();
+            adapter[i] = new ListAdapter(this, activityListArray[i].toStringArray(), activityListArray[i]);
             listArray[i].setAdapter(adapter[i]);
             listArray[i].setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //pull up the create activity fragment
+                    Toast.makeText(getBaseContext(), activityListArray[index].getActivity(position)
+                    .toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
+        */
 
         /*
         Spinner dayOfWeekSpinner = (Spinner)  findViewById(R.id.day_of_week_spinner_create_profile);
@@ -71,6 +114,7 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
         TextView newText = new TextView(getBaseContext());
         //TextView fromTextView = (TextView) findViewById(R.id.from_text_view_create_schedule);
         //TextView toTextView = (TextView) findViewById(R.id.to_text_view_create_schedule);
+        /*
         switch (dayOfWeek) {
             case "Sunday":
                 newText = (TextView) findViewById(R.id.sunday_text_view_create_schedule);
@@ -95,6 +139,7 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
                 break;
         }
         newText.append(startPickerFragment.getTime() + " - " + stopPickerFragment.getTime() + ";  ");
+        */
         //fromTextView.setText("From");
         //toTextView.setText("To");
     }
@@ -130,5 +175,54 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
         setResult(RESULT_CANCELED);
         //leave this activity
         finish();
+    }
+
+    private void initializeAll() {
+        sunActivityList = new ActivityList();
+        monActivityList = new ActivityList();
+        tueActivityList = new ActivityList();
+        wedActivityList = new ActivityList();
+        thuActivityList = new ActivityList();
+        friActivityList = new ActivityList();
+        satActivityList = new ActivityList();
+        sunListView = (ListView) findViewById(R.id.sun_list_view);
+        monListView = (ListView) findViewById(R.id.mon_list_view);
+        tueListView = (ListView) findViewById(R.id.tue_list_view);
+        wedListView = (ListView) findViewById(R.id.wed_list_view);
+        thuListView = (ListView) findViewById(R.id.thu_list_view);
+        friListView = (ListView) findViewById(R.id.fri_list_view);
+        satListView = (ListView) findViewById(R.id.sat_list_view);
+        sunAdapter = new ListAdapter(this, sunActivityList.toStringArray(), sunActivityList);
+        monAdapter = new ListAdapter(this, monActivityList.toStringArray(), monActivityList);
+        tueAdapter = new ListAdapter(this, tueActivityList.toStringArray(), tueActivityList);
+        wedAdapter = new ListAdapter(this, wedActivityList.toStringArray(), wedActivityList);
+        thuAdapter = new ListAdapter(this, thuActivityList.toStringArray(), thuActivityList);
+        friAdapter = new ListAdapter(this, friActivityList.toStringArray(), friActivityList);
+        satAdapter = new ListAdapter(this, satActivityList.toStringArray(), satActivityList);
+        sunListView.setAdapter(sunAdapter);
+        monListView.setAdapter(monAdapter);
+        tueListView.setAdapter(tueAdapter);
+        wedListView.setAdapter(wedAdapter);
+        thuListView.setAdapter(thuAdapter);
+        friListView.setAdapter(friAdapter);
+        satListView.setAdapter(satAdapter);
+        sunListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                Toast.makeText(getBaseContext(), sunActivityList.getActivity(position)
+                        .toString(), Toast.LENGTH_SHORT).show();
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Sunday");
+            }
+        });
+        //repeat for each list view when onclick is done
     }
 }

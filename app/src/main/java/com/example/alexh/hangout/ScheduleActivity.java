@@ -2,6 +2,7 @@ package com.example.alexh.hangout;
 
 public class ScheduleActivity {
 
+    boolean isAm;
     int startHour;
     int startMinute;
     int stopHour;
@@ -9,12 +10,13 @@ public class ScheduleActivity {
     String description;
 
     public ScheduleActivity(int startHour, int startMinute, int stopHour, int stopMinute,
-                            String description) {
+                            String description, boolean isAm) {
         this.description = description;
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.stopHour = stopHour;
         this.stopMinute = stopMinute;
+        this.isAm = isAm;
     }
 
     public String getDescription() {

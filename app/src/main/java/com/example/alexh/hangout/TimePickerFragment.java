@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -32,8 +33,8 @@ public class TimePickerFragment extends DialogFragment
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         boolean isAm = true;
-        TextView fromTextView = (TextView) getActivity().findViewById(R.id.from_text_view_create_schedule);
-        TextView toTextView = (TextView) getActivity().findViewById(R.id.to_text_view_create_schedule);
+        Button fromButton = (Button) getActivity().findViewById(R.id.start_time_button_create_activity_fragment);
+        Button toButton = (Button) getActivity().findViewById(R.id.stop_time_button_create_activity_fragment);
         if(hourOfDay > 11) {
             isAm = false;
         }
@@ -50,21 +51,21 @@ public class TimePickerFragment extends DialogFragment
             time = hourOfDay + ":" + minute;
         }
         if(type.equals("start")) {
-            fromTextView.setText(time);
+            fromButton.setText(time);
             if(isAm) {
-                fromTextView.append(" am");
+                fromButton.append(" am");
             }
             else {
-                fromTextView.append(" pm");
+                fromButton.append(" pm");
             }
         }
         else if(type.equals("stop")) {
-            toTextView.setText(time);
+            toButton.setText(time);
             if(isAm) {
-                toTextView.append(" am");
+                toButton.append(" am");
             }
             else {
-                toTextView.append(" pm");
+                toButton.append(" pm");
             }
         }
     }

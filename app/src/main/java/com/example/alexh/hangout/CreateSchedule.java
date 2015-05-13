@@ -1,13 +1,10 @@
 package com.example.alexh.hangout;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +20,9 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
     private String dayOfWeek = "Sunday";
     private TimePickerFragment startPickerFragment;
     private TimePickerFragment stopPickerFragment;
+    private ListAdapter[] adapter;
+    private ListView[] listArray;
+    private ActivityList[] activityArray;
 
     @Override
     public void onBackPressed() {
@@ -36,17 +36,40 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_schedule);
+        listArray = new ListView[7];
+        //listArray[0] = (ListView) findViewById(R.id.);
+        //listArray[1] = (ListView) findViewById(R.id.);
+        //listArray[2] = (ListView) findViewById(R.id.);
+        //listArray[3] = (ListView) findViewById(R.id.);
+        //listArray[4] = (ListView) findViewById(R.id.);
+        //listArray[5] = (ListView) findViewById(R.id.);
+        //listArray[6] = (ListView) findViewById(R.id.);
+        activityArray = new ActivityList[7];
+        adapter = new ListAdapter[7];
+        for(int i = 0; i < listArray.length; i++) {
+            adapter[i] = new ListAdapter(this, activityArray[i].toStringArray(), activityArray[i]);
+            listArray[i].setAdapter(adapter[i]);
+            listArray[i].setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+            });
+        }
+
+        /*
         Spinner dayOfWeekSpinner = (Spinner)  findViewById(R.id.day_of_week_spinner_create_profile);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.days_of_week, android.R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dayOfWeekSpinner.setAdapter(spinnerAdapter);
+        */
     }
 
     public void addTimeToSchedule(View view) {
         TextView newText = new TextView(getBaseContext());
-        TextView fromTextView = (TextView) findViewById(R.id.from_text_view_create_schedule);
-        TextView toTextView = (TextView) findViewById(R.id.to_text_view_create_schedule);
+        //TextView fromTextView = (TextView) findViewById(R.id.from_text_view_create_schedule);
+        //TextView toTextView = (TextView) findViewById(R.id.to_text_view_create_schedule);
         switch (dayOfWeek) {
             case "Sunday":
                 newText = (TextView) findViewById(R.id.sunday_text_view_create_schedule);
@@ -71,8 +94,8 @@ public class CreateSchedule extends Activity implements AdapterView.OnItemSelect
                 break;
         }
         newText.append(startPickerFragment.getTime() + " - " + stopPickerFragment.getTime() + ";  ");
-        fromTextView.setText("From");
-        toTextView.setText("To");
+        //fromTextView.setText("From");
+        //toTextView.setText("To");
     }
 
     public void finishProfile(View view) {

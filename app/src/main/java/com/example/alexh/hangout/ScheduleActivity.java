@@ -25,12 +25,20 @@ public class ScheduleActivity {
         return description;
     }
 
+    public String getStartAmPm() {
+        return startAmPm;
+    }
+
     public int getStartHour() {
         return  startHour;
     }
     
     public int getStartMinute() {
         return startMinute;
+    }
+
+    public String getStopAmPm() {
+        return stopAmPm;
     }
 
     public int getStopHour() {

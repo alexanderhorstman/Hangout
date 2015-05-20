@@ -16,7 +16,7 @@ public class TimePickerFragment extends DialogFragment
 
     private int hour;
     private int minute;
-    private String amPm = " am";
+    private String amPm = "am";
     private String time;
     private String type;
     private ScheduleActivity activity;
@@ -54,7 +54,7 @@ public class TimePickerFragment extends DialogFragment
         Button toButton = (Button) getActivity().findViewById(R.id.stop_time_button_create_activity_fragment);
         if(hourOfDay > 11) {
             isAm = false;
-            amPm = " pm";
+            amPm = "pm";
         }
         if(hourOfDay > 12) {
             hourOfDay -= 12;
@@ -71,23 +71,17 @@ public class TimePickerFragment extends DialogFragment
         else {
             time = hourOfDay + ":" + minute;
         }
+        if(isAm) {
+            time += " am";
+        }
+        else {
+            time += " pm";
+        }
         if(type.equals("start")) {
             fromButton.setText(time);
-            if(isAm) {
-                fromButton.append(" am");
-            }
-            else {
-                fromButton.append(" pm");
-            }
         }
         else if(type.equals("stop")) {
             toButton.setText(time);
-            if(isAm) {
-                toButton.append(" am");
-            }
-            else {
-                toButton.append(" pm");
-            }
         }
     }
 

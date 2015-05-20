@@ -34,9 +34,6 @@ public class ListAdapter extends ArrayAdapter<String>{
         viewHolder.textView.setText(list.getActivity(position).toString());
         return view;
     }
-    public void setLayoutsParams(ViewGroup.LayoutParams params) {
-
-    }
 
     public void setList(ActivityList list) {
         this.list = list;

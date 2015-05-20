@@ -9,13 +9,16 @@ public class ActivityList {
 
     public ActivityList() {
         schedule = new ArrayList<>();
-        ScheduleActivity defaultActivity = new ScheduleActivity(999, 999, "am", 0, 0, "am", "default");
+        ScheduleActivity defaultActivity = new ScheduleActivity(999, 999, "pm", 0, 0, "pm", "default");
         schedule.add(defaultActivity);
     }
 
     public void addActivity(ScheduleActivity activity) {
         int position = 0;
         if(schedule.size() > 0) {
+            while(activity.startAmPm.equals("pm") && schedule.get(position).startAmPm.equals("am")) {
+                position++;
+            }
             while(activity.getStartHour() > schedule.get(position).getStartHour()) {
                 position++;
             }
@@ -32,6 +35,21 @@ public class ActivityList {
 
     public ScheduleActivity getActivity(int index) {
         return schedule.get(index);
+    }
+
+    public int getSize() {
+        return schedule.size();
+    }
+
+    public boolean replace(int position, ScheduleActivity newActivity) {
+        if(position >= schedule.size()) {
+            return false;
+        }
+        else {
+            schedule.remove(position);
+            addActivity(newActivity);
+            return true;
+        }
     }
 
     public String[] toStringArray() {

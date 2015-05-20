@@ -7,7 +7,10 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -50,15 +53,19 @@ public class CreateSchedule extends FragmentActivity {
     private ListAdapter thuAdapter;
     private ListAdapter friAdapter;
     private ListAdapter satAdapter;
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+    private ViewHolder viewHolder;
 
     @Override
     public void onBackPressed() {
-        //set result code to canceled
-        setResult(RESULT_CANCELED);
-        //leave this activity
-        finish();
+        if(viewHolder.activityView.getVisibility() == View.GONE) {
+            //set result code to canceled
+            setResult(RESULT_CANCELED);
+            //leave this activity
+            finish();
+        }
+        else {
+            viewHolder.activityView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -68,32 +75,59 @@ public class CreateSchedule extends FragmentActivity {
         View tempView = findViewById(R.id.create_activity_fragment);
         tempView.setVisibility(View.GONE);
         initializeAll();
+        viewHolder = new ViewHolder();
 
     }
 
     public void addActivityToSchedule(View view) {
-        View activityView = findViewById(R.id.create_activity_fragment);
-        activityView.setVisibility(View.GONE);
-        Button startButton = (Button) findViewById(R.id.start_time_button_create_activity_fragment);
-        Button stopButton = (Button) findViewById(R.id.stop_time_button_create_activity_fragment);
-        EditText descriptionEditText = (EditText) findViewById(R.id.description_edit_text_create_activity);
-        String startTime;
-        String stopTime;
-        ScheduleActivity newActivity;
-        startTime = startButton.getText().toString();
-        stopTime = stopButton.getText().toString();
-        if(startTime.contains("am")) {
-            //test this
-            newActivity = new ScheduleActivity(Integer.parseInt(startTime.substring(0,
-                    startTime.indexOf(":"))), Integer.parseInt(startTime.substring
-                    (startTime.indexOf(":") + 1, startTime.indexOf(" "))), Integer.parseInt
-                    (startTime.substring(0, stopTime.indexOf(":"))), Integer.parseInt
-                    (stopTime.substring(startTime.indexOf(":") + 1, stopTime.indexOf(" "))),
-                    descriptionEditText.getText().toString(), true);
+        if(viewHolder.descriptionEditText.getText().toString().equals("")) {
+            makeToast("Description cannot be empty.", true);
+        }
+        else if(viewHolder.startButton.getText().toString().equals("Start Time")) {
+            makeToast("Choose a start time.", true);
+        }
+        else if(viewHolder.stopButton.getText().toString().equals("Stop Time")) {
+            makeToast("Choose a stop time.", true);
         }
         else {
+            viewHolder.activityView.setVisibility(View.GONE);
+            String description = viewHolder.descriptionEditText.getText().toString();
+            ScheduleActivity newActivity = new ScheduleActivity(startPickerFragment.getHour(),
+                    startPickerFragment.getMinute(), startPickerFragment.getAmPm(),
+                    stopPickerFragment.getHour(), stopPickerFragment.getMinute(),
+                    stopPickerFragment.getAmPm(), description);
+            switch(viewHolder.dayOfWeekTextView.getText().toString()) {
+                case "Sunday":
+                    sunActivityList.addActivity(newActivity);
+                    updateAdapter("Sunday");
+                    break;
+                case "Monday":
 
+                    break;
+                case "Tuesday":
+
+                    break;
+                case "Wednesday":
+
+                    break;
+                case "Thursday":
+
+                    break;
+                case "Friday":
+
+                    break;
+                case "Saturday":
+
+                    break;
+                default:
+                    break;
+            }
         }
+
+    }
+
+    public void cancelNewActivity(View view) {
+        viewHolder.activityView.setVisibility(View.GONE);
     }
 
     public void finishProfile(View view) {
@@ -166,5 +200,73 @@ public class CreateSchedule extends FragmentActivity {
             }
         });
         //repeat for each list view when onclick is done
+
+        /*
+        View view = sunAdapter.getView(0, null, sunListView);
+        view.measure(0, 0);
+        ListView.LayoutParams params =
+                new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        5 * view.getMeasuredHeight());
+        sunListView.setLayoutParams(params);
+        */
+    }
+
+    public void makeToast(String message, boolean longTime) {
+        if(longTime) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateAdapter(String dayOfWeek) {
+        switch(dayOfWeek) {
+            case "Sunday":
+                sunAdapter = new ListAdapter(this, sunActivityList.toStringArray(), sunActivityList);
+                sunListView.setAdapter(sunAdapter);
+                sunListView.refreshDrawableState();
+                break;
+            case "Monday":
+                monAdapter = new ListAdapter(this, monActivityList.toStringArray(), monActivityList);
+                monListView.setAdapter(monAdapter);
+                monListView.refreshDrawableState();
+                break;
+            case "Tuesday":
+                tueAdapter = new ListAdapter(this, tueActivityList.toStringArray(), tueActivityList);
+                tueListView.setAdapter(tueAdapter);
+                tueListView.refreshDrawableState();
+                break;
+            case "Wednesday":
+                wedAdapter = new ListAdapter(this, wedActivityList.toStringArray(), wedActivityList);
+                wedListView.setAdapter(wedAdapter);
+                wedListView.refreshDrawableState();
+                break;
+            case "Thursday":
+                thuAdapter = new ListAdapter(this, thuActivityList.toStringArray(), thuActivityList);
+                thuListView.setAdapter(thuAdapter);
+                thuListView.refreshDrawableState();
+                break;
+            case "Friday":
+                friAdapter = new ListAdapter(this, friActivityList.toStringArray(), friActivityList);
+                friListView.setAdapter(friAdapter);
+                friListView.refreshDrawableState();
+                break;
+            case "Saturday":
+                satAdapter = new ListAdapter(this, satActivityList.toStringArray(), satActivityList);
+                satListView.setAdapter(satAdapter);
+                satListView.refreshDrawableState();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private class ViewHolder {
+        View activityView = findViewById(R.id.create_activity_fragment);
+        TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+        EditText descriptionEditText = (EditText) findViewById(R.id.description_edit_text_create_activity);
+        Button startButton = (Button) findViewById(R.id.start_time_button_create_activity_fragment);
+        Button stopButton = (Button) findViewById(R.id.stop_time_button_create_activity_fragment);
     }
 }

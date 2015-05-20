@@ -2,21 +2,23 @@ package com.example.alexh.hangout;
 
 public class ScheduleActivity {
 
-    boolean isAm;
     int startHour;
     int startMinute;
     int stopHour;
     int stopMinute;
+    String startAmPm;
+    String stopAmPm;
     String description;
 
-    public ScheduleActivity(int startHour, int startMinute, int stopHour, int stopMinute,
-                            String description, boolean isAm) {
+    public ScheduleActivity(int startHour, int startMinute, String startAmPm, int stopHour, int stopMinute,
+                             String stopAmPm, String description) {
         this.description = description;
         this.startHour = startHour;
         this.startMinute = startMinute;
         this.stopHour = stopHour;
         this.stopMinute = stopMinute;
-        this.isAm = isAm;
+        this.startAmPm = startAmPm;
+        this.stopAmPm = stopAmPm;
     }
 
     public String getDescription() {
@@ -60,13 +62,19 @@ public class ScheduleActivity {
     }
 
     public String toString() {
+        String returnString = "";
         if(description.equals("default")) {
             return "+ New Activity";
         }
-        else {
-            return description + ":\n" + startHour + ":" + startMinute + "\nto\n" + stopHour + ":"
-                    + stopMinute;
+        returnString += description + ":\n" + startHour + ":";
+        if(startMinute < 10) {
+            returnString += "0";
         }
-
+        returnString += startMinute + startAmPm + "\nto\n" + stopHour + ":";
+        if(stopMinute < 10) {
+            returnString += "0";
+        }
+        returnString += stopMinute + stopAmPm;
+        return returnString;
     }
 }

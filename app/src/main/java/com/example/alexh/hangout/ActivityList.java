@@ -9,7 +9,7 @@ public class ActivityList {
 
     public ActivityList() {
         schedule = new ArrayList<>();
-        ScheduleActivity defaultActivity = new ScheduleActivity(999, 999, 0, 0, "default", false);
+        ScheduleActivity defaultActivity = new ScheduleActivity(999, 999, "am", 0, 0, "am", "default");
         schedule.add(defaultActivity);
     }
 

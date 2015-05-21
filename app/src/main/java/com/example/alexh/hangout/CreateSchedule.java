@@ -1,5 +1,6 @@
 package com.example.alexh.hangout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 
 public class CreateSchedule extends FragmentActivity {
 
-    private boolean[][] freeTime = new boolean[48][7];
+    private boolean[][] schedule = new boolean[48][7];
     private TimePickerFragment startPickerFragment;
     private TimePickerFragment stopPickerFragment;
     private ActivityList sunActivityList;
@@ -56,12 +57,9 @@ public class CreateSchedule extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_schedule);
-        View tempView = findViewById(R.id.create_activity_fragment);
-        tempView.setVisibility(View.GONE);
+        viewHolder.activityView.setVisibility(View.GONE);
         viewHolder = new ViewHolder();
         initializeAll();
-
-
     }
 
     public void addActivityToSchedule(View view) {
@@ -94,22 +92,94 @@ public class CreateSchedule extends FragmentActivity {
                             }
                             break;
                         case "Monday":
-
+                            if(indexToBeUpdated < monActivityList.getSize()) {
+                                viewHolder.activityView.setVisibility(View.GONE);
+                                ScheduleActivity newActivity =
+                                        new ScheduleActivity(startPickerFragment.getHour(),
+                                                startPickerFragment.getMinute(),
+                                                startPickerFragment.getAmPm(),
+                                                stopPickerFragment.getHour(),
+                                                stopPickerFragment.getMinute(),
+                                                stopPickerFragment.getAmPm(),
+                                                viewHolder.descriptionEditText.getText().toString());
+                                monActivityList.replace(indexToBeUpdated, newActivity);
+                                updateAdapter("Monday");
+                            }
                             break;
                         case "Tuesday":
-
+                            if(indexToBeUpdated < tueActivityList.getSize()) {
+                                viewHolder.activityView.setVisibility(View.GONE);
+                                ScheduleActivity newActivity =
+                                        new ScheduleActivity(startPickerFragment.getHour(),
+                                                startPickerFragment.getMinute(),
+                                                startPickerFragment.getAmPm(),
+                                                stopPickerFragment.getHour(),
+                                                stopPickerFragment.getMinute(),
+                                                stopPickerFragment.getAmPm(),
+                                                viewHolder.descriptionEditText.getText().toString());
+                                tueActivityList.replace(indexToBeUpdated, newActivity);
+                                updateAdapter("Tuesday");
+                            }
                             break;
                         case "Wednesday":
-
+                            if(indexToBeUpdated < wedActivityList.getSize()) {
+                                viewHolder.activityView.setVisibility(View.GONE);
+                                ScheduleActivity newActivity =
+                                        new ScheduleActivity(startPickerFragment.getHour(),
+                                                startPickerFragment.getMinute(),
+                                                startPickerFragment.getAmPm(),
+                                                stopPickerFragment.getHour(),
+                                                stopPickerFragment.getMinute(),
+                                                stopPickerFragment.getAmPm(),
+                                                viewHolder.descriptionEditText.getText().toString());
+                                wedActivityList.replace(indexToBeUpdated, newActivity);
+                                updateAdapter("Wednesday");
+                            }
                             break;
                         case "Thursday":
-
+                            if(indexToBeUpdated < thuActivityList.getSize()) {
+                                viewHolder.activityView.setVisibility(View.GONE);
+                                ScheduleActivity newActivity =
+                                        new ScheduleActivity(startPickerFragment.getHour(),
+                                                startPickerFragment.getMinute(),
+                                                startPickerFragment.getAmPm(),
+                                                stopPickerFragment.getHour(),
+                                                stopPickerFragment.getMinute(),
+                                                stopPickerFragment.getAmPm(),
+                                                viewHolder.descriptionEditText.getText().toString());
+                                thuActivityList.replace(indexToBeUpdated, newActivity);
+                                updateAdapter("Thursday");
+                            }
                             break;
                         case "Friday":
-
+                            if(indexToBeUpdated < friActivityList.getSize()) {
+                                viewHolder.activityView.setVisibility(View.GONE);
+                                ScheduleActivity newActivity =
+                                        new ScheduleActivity(startPickerFragment.getHour(),
+                                                startPickerFragment.getMinute(),
+                                                startPickerFragment.getAmPm(),
+                                                stopPickerFragment.getHour(),
+                                                stopPickerFragment.getMinute(),
+                                                stopPickerFragment.getAmPm(),
+                                                viewHolder.descriptionEditText.getText().toString());
+                                friActivityList.replace(indexToBeUpdated, newActivity);
+                                updateAdapter("Friday");
+                            }
                             break;
                         case "Saturday":
-
+                            if(indexToBeUpdated < satActivityList.getSize()) {
+                                viewHolder.activityView.setVisibility(View.GONE);
+                                ScheduleActivity newActivity =
+                                        new ScheduleActivity(startPickerFragment.getHour(),
+                                                startPickerFragment.getMinute(),
+                                                startPickerFragment.getAmPm(),
+                                                stopPickerFragment.getHour(),
+                                                stopPickerFragment.getMinute(),
+                                                stopPickerFragment.getAmPm(),
+                                                viewHolder.descriptionEditText.getText().toString());
+                                satActivityList.replace(indexToBeUpdated, newActivity);
+                                updateAdapter("Saturday");
+                            }
                             break;
                         default:
                             break;
@@ -129,22 +199,28 @@ public class CreateSchedule extends FragmentActivity {
                         updateAdapter("Sunday");
                         break;
                     case "Monday":
-
+                        monActivityList.addActivity(newActivity);
+                        updateAdapter("Monday");
                         break;
                     case "Tuesday":
-
+                        tueActivityList.addActivity(newActivity);
+                        updateAdapter("Tuesday");
                         break;
                     case "Wednesday":
-
+                        wedActivityList.addActivity(newActivity);
+                        updateAdapter("Wednesday");
                         break;
                     case "Thursday":
-
+                        thuActivityList.addActivity(newActivity);
+                        updateAdapter("Thursday");
                         break;
                     case "Friday":
-
+                        friActivityList.addActivity(newActivity);
+                        updateAdapter("Friday");
                         break;
                     case "Saturday":
-
+                        satActivityList.addActivity(newActivity);
+                        updateAdapter("Saturday");
                         break;
                     default:
                         break;
@@ -157,8 +233,17 @@ public class CreateSchedule extends FragmentActivity {
         viewHolder.activityView.setVisibility(View.GONE);
     }
 
+    public void convertListViewsToSchedule() {
+
+    }
+
     public void finishProfile(View view) {
         //do stuff to create and save a profile
+        convertListViewsToSchedule();
+        Intent previousActivity = getIntent();
+        Profile newProfile = (Profile) previousActivity.getSerializableExtra("profileInProgress");
+        newProfile.setSchedule(schedule);
+        //addNewUser();
     }
 
     public void pickStartTime(View v) {
@@ -248,6 +333,312 @@ public class CreateSchedule extends FragmentActivity {
                                 sunActivityList.getActivity(position).getStopHour() + ":"
                                         + sunActivityList.getActivity(position).getStopMinute()
                                         + sunActivityList.getActivity(position).getStopAmPm());
+                    }
+                    viewHolder.addButton.setText("Update");
+                    indexToBeUpdated = position;
+                }
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+            }
+        });
+        monListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Monday");
+                if(monActivityList.getActivity(position).getDescription().equals("default")) {
+                    viewHolder.descriptionEditText.setText("");
+                    viewHolder.startButton.setText("Start Time");
+                    viewHolder.stopButton.setText("Stop Time");
+                    viewHolder.addButton.setText("Add");
+                    indexToBeUpdated = -1;
+                }
+                else {
+                    viewHolder.descriptionEditText.setText(monActivityList.getActivity(position).getDescription());
+                    if(monActivityList.getActivity(position).getStartMinute() < 10) {
+                        viewHolder.startButton.setText(
+                                monActivityList.getActivity(position).getStartHour() + ":0"
+                                        + monActivityList.getActivity(position).getStartMinute()
+                                        + monActivityList.getActivity(position).getStartAmPm());
+                    }
+                    else {
+                        viewHolder.startButton.setText(
+                                monActivityList.getActivity(position).getStartHour() + ":"
+                                        + monActivityList.getActivity(position).getStartMinute()
+                                        + monActivityList.getActivity(position).getStartAmPm());
+                    }
+                    if(monActivityList.getActivity(position).getStopMinute() < 10) {
+                        viewHolder.stopButton.setText(
+                                monActivityList.getActivity(position).getStopHour() + ":0"
+                                        + monActivityList.getActivity(position).getStopMinute()
+                                        + monActivityList.getActivity(position).getStopAmPm());
+                    }
+                    else {
+                        viewHolder.stopButton.setText(
+                                monActivityList.getActivity(position).getStopHour() + ":"
+                                        + monActivityList.getActivity(position).getStopMinute()
+                                        + monActivityList.getActivity(position).getStopAmPm());
+                    }
+                    viewHolder.addButton.setText("Update");
+                    indexToBeUpdated = position;
+                }
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+            }
+        });
+        tueListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Tuesday");
+                if(tueActivityList.getActivity(position).getDescription().equals("default")) {
+                    viewHolder.descriptionEditText.setText("");
+                    viewHolder.startButton.setText("Start Time");
+                    viewHolder.stopButton.setText("Stop Time");
+                    viewHolder.addButton.setText("Add");
+                    indexToBeUpdated = -1;
+                }
+                else {
+                    viewHolder.descriptionEditText.setText(tueActivityList.getActivity(position).getDescription());
+                    if(tueActivityList.getActivity(position).getStartMinute() < 10) {
+                        viewHolder.startButton.setText(
+                                tueActivityList.getActivity(position).getStartHour() + ":0"
+                                        + tueActivityList.getActivity(position).getStartMinute()
+                                        + tueActivityList.getActivity(position).getStartAmPm());
+                    }
+                    else {
+                        viewHolder.startButton.setText(
+                                tueActivityList.getActivity(position).getStartHour() + ":"
+                                        + tueActivityList.getActivity(position).getStartMinute()
+                                        + tueActivityList.getActivity(position).getStartAmPm());
+                    }
+                    if(tueActivityList.getActivity(position).getStopMinute() < 10) {
+                        viewHolder.stopButton.setText(
+                                tueActivityList.getActivity(position).getStopHour() + ":0"
+                                        + tueActivityList.getActivity(position).getStopMinute()
+                                        + tueActivityList.getActivity(position).getStopAmPm());
+                    }
+                    else {
+                        viewHolder.stopButton.setText(
+                                tueActivityList.getActivity(position).getStopHour() + ":"
+                                        + tueActivityList.getActivity(position).getStopMinute()
+                                        + tueActivityList.getActivity(position).getStopAmPm());
+                    }
+                    viewHolder.addButton.setText("Update");
+                    indexToBeUpdated = position;
+                }
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+            }
+        });
+        wedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Wednesday");
+                if(wedActivityList.getActivity(position).getDescription().equals("default")) {
+                    viewHolder.descriptionEditText.setText("");
+                    viewHolder.startButton.setText("Start Time");
+                    viewHolder.stopButton.setText("Stop Time");
+                    viewHolder.addButton.setText("Add");
+                    indexToBeUpdated = -1;
+                }
+                else {
+                    viewHolder.descriptionEditText.setText(wedActivityList.getActivity(position).getDescription());
+                    if(wedActivityList.getActivity(position).getStartMinute() < 10) {
+                        viewHolder.startButton.setText(
+                                wedActivityList.getActivity(position).getStartHour() + ":0"
+                                        + wedActivityList.getActivity(position).getStartMinute()
+                                        + wedActivityList.getActivity(position).getStartAmPm());
+                    }
+                    else {
+                        viewHolder.startButton.setText(
+                                wedActivityList.getActivity(position).getStartHour() + ":"
+                                        + wedActivityList.getActivity(position).getStartMinute()
+                                        + wedActivityList.getActivity(position).getStartAmPm());
+                    }
+                    if(wedActivityList.getActivity(position).getStopMinute() < 10) {
+                        viewHolder.stopButton.setText(
+                                wedActivityList.getActivity(position).getStopHour() + ":0"
+                                        + wedActivityList.getActivity(position).getStopMinute()
+                                        + wedActivityList.getActivity(position).getStopAmPm());
+                    }
+                    else {
+                        viewHolder.stopButton.setText(
+                                wedActivityList.getActivity(position).getStopHour() + ":"
+                                        + wedActivityList.getActivity(position).getStopMinute()
+                                        + wedActivityList.getActivity(position).getStopAmPm());
+                    }
+                    viewHolder.addButton.setText("Update");
+                    indexToBeUpdated = position;
+                }
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+            }
+        });
+        thuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Thursday");
+                if(thuActivityList.getActivity(position).getDescription().equals("default")) {
+                    viewHolder.descriptionEditText.setText("");
+                    viewHolder.startButton.setText("Start Time");
+                    viewHolder.stopButton.setText("Stop Time");
+                    viewHolder.addButton.setText("Add");
+                    indexToBeUpdated = -1;
+                }
+                else {
+                    viewHolder.descriptionEditText.setText(thuActivityList.getActivity(position).getDescription());
+                    if(thuActivityList.getActivity(position).getStartMinute() < 10) {
+                        viewHolder.startButton.setText(
+                                thuActivityList.getActivity(position).getStartHour() + ":0"
+                                        + thuActivityList.getActivity(position).getStartMinute()
+                                        + thuActivityList.getActivity(position).getStartAmPm());
+                    }
+                    else {
+                        viewHolder.startButton.setText(
+                                thuActivityList.getActivity(position).getStartHour() + ":"
+                                        + thuActivityList.getActivity(position).getStartMinute()
+                                        + thuActivityList.getActivity(position).getStartAmPm());
+                    }
+                    if(thuActivityList.getActivity(position).getStopMinute() < 10) {
+                        viewHolder.stopButton.setText(
+                                thuActivityList.getActivity(position).getStopHour() + ":0"
+                                        + thuActivityList.getActivity(position).getStopMinute()
+                                        + thuActivityList.getActivity(position).getStopAmPm());
+                    }
+                    else {
+                        viewHolder.stopButton.setText(
+                                thuActivityList.getActivity(position).getStopHour() + ":"
+                                        + thuActivityList.getActivity(position).getStopMinute()
+                                        + thuActivityList.getActivity(position).getStopAmPm());
+                    }
+                    viewHolder.addButton.setText("Update");
+                    indexToBeUpdated = position;
+                }
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+            }
+        });
+        friListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Friday");
+                if(friActivityList.getActivity(position).getDescription().equals("default")) {
+                    viewHolder.descriptionEditText.setText("");
+                    viewHolder.startButton.setText("Start Time");
+                    viewHolder.stopButton.setText("Stop Time");
+                    viewHolder.addButton.setText("Add");
+                    indexToBeUpdated = -1;
+                }
+                else {
+                    viewHolder.descriptionEditText.setText(friActivityList.getActivity(position).getDescription());
+                    if(friActivityList.getActivity(position).getStartMinute() < 10) {
+                        viewHolder.startButton.setText(
+                                friActivityList.getActivity(position).getStartHour() + ":0"
+                                        + friActivityList.getActivity(position).getStartMinute()
+                                        + friActivityList.getActivity(position).getStartAmPm());
+                    }
+                    else {
+                        viewHolder.startButton.setText(
+                                friActivityList.getActivity(position).getStartHour() + ":"
+                                        + friActivityList.getActivity(position).getStartMinute()
+                                        + friActivityList.getActivity(position).getStartAmPm());
+                    }
+                    if(friActivityList.getActivity(position).getStopMinute() < 10) {
+                        viewHolder.stopButton.setText(
+                                friActivityList.getActivity(position).getStopHour() + ":0"
+                                        + friActivityList.getActivity(position).getStopMinute()
+                                        + friActivityList.getActivity(position).getStopAmPm());
+                    }
+                    else {
+                        viewHolder.stopButton.setText(
+                                friActivityList.getActivity(position).getStopHour() + ":"
+                                        + friActivityList.getActivity(position).getStopMinute()
+                                        + friActivityList.getActivity(position).getStopAmPm());
+                    }
+                    viewHolder.addButton.setText("Update");
+                    indexToBeUpdated = position;
+                }
+                if(activityFragmentView.getVisibility() == View.GONE) {
+                    activityFragmentView.setVisibility(View.VISIBLE);
+                }
+                else if(activityFragmentView.getVisibility() == View.VISIBLE) {
+                    activityFragmentView.setVisibility(View.GONE);
+                }
+            }
+        });
+        satListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //pull up create activity fragment
+                View activityFragmentView = findViewById(R.id.create_activity_fragment);
+                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                dayOfWeekTextView.setText("Saturday");
+                if(satActivityList.getActivity(position).getDescription().equals("default")) {
+                    viewHolder.descriptionEditText.setText("");
+                    viewHolder.startButton.setText("Start Time");
+                    viewHolder.stopButton.setText("Stop Time");
+                    viewHolder.addButton.setText("Add");
+                    indexToBeUpdated = -1;
+                }
+                else {
+                    viewHolder.descriptionEditText.setText(satActivityList.getActivity(position).getDescription());
+                    if(satActivityList.getActivity(position).getStartMinute() < 10) {
+                        viewHolder.startButton.setText(
+                                satActivityList.getActivity(position).getStartHour() + ":0"
+                                        + satActivityList.getActivity(position).getStartMinute()
+                                        + satActivityList.getActivity(position).getStartAmPm());
+                    }
+                    else {
+                        viewHolder.startButton.setText(
+                                satActivityList.getActivity(position).getStartHour() + ":"
+                                        + satActivityList.getActivity(position).getStartMinute()
+                                        + satActivityList.getActivity(position).getStartAmPm());
+                    }
+                    if(satActivityList.getActivity(position).getStopMinute() < 10) {
+                        viewHolder.stopButton.setText(
+                                satActivityList.getActivity(position).getStopHour() + ":0"
+                                        + satActivityList.getActivity(position).getStopMinute()
+                                        + satActivityList.getActivity(position).getStopAmPm());
+                    }
+                    else {
+                        viewHolder.stopButton.setText(
+                                satActivityList.getActivity(position).getStopHour() + ":"
+                                        + satActivityList.getActivity(position).getStopMinute()
+                                        + satActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;

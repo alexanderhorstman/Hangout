@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Profile implements Serializable{
     private boolean available;
     private boolean online;
-    private boolean[] schedule;
+    private boolean[][] schedule;
     private String emailAddress;
     private String firstName;
     private String fullName;
@@ -23,7 +23,7 @@ public class Profile implements Serializable{
         this.password = password;
     }
 
-    public Profile(boolean[] schedule, String emailAddress, String firstName, String lastName,
+    public Profile(boolean[][] schedule, String emailAddress, String firstName, String lastName,
                    String password) {
         this.schedule = schedule;
         this.emailAddress = emailAddress;
@@ -41,7 +41,7 @@ public class Profile implements Serializable{
         return online;
     }
 
-    public boolean[] getSchedule() {
+    public boolean[][] getSchedule() {
         return schedule;
     }
 
@@ -73,7 +73,7 @@ public class Profile implements Serializable{
         this.online = online;
     }
 
-    public void setSchedule(boolean[] schedule) {
+    public void setSchedule(boolean[][] schedule) {
         this.schedule = schedule;
     }
 

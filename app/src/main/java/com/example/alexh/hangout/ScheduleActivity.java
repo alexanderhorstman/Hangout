@@ -78,7 +78,7 @@ public class ScheduleActivity {
         if(startMinute < 10) {
             returnString += "0";
         }
-        returnString += startMinute + startAmPm + "\nto\n" + stopHour + ":";
+        returnString += startMinute + startAmPm + "\n   to\n" + stopHour + ":";
         if(stopMinute < 10) {
             returnString += "0";
         }

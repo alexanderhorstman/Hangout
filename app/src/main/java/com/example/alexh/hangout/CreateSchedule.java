@@ -57,8 +57,8 @@ public class CreateSchedule extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_schedule);
-        viewHolder.activityView.setVisibility(View.GONE);
         viewHolder = new ViewHolder();
+        viewHolder.activityView.setVisibility(View.GONE);
         initializeAll();
     }
 

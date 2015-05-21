@@ -5,144 +5,251 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#ff838383"
-    android:padding="10dp">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sun"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mon"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tue"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wed"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thu"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fri"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sat"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:baselineAligned="false"
-        android:layout_weight="20">
+        android:orientation="horizontal"
+        android:layout_weight="9">
 
-        <ListView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/sun_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <ListView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sun"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/sun_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/mon_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <ListView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/mon_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/tue_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <ListView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/tue_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/wed_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <ListView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/wed_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/thu_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <ListView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/thu_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/fri_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <ListView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fri"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/fri_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#ff000000"/>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:divider="#ff000000"
-            android:dividerHeight="1dp"
-            android:layout_weight="1"
-            android:id="@+id/sat_list_view"
-            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="#ff000000"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:divider="#ff000000"
+                android:dividerHeight="1dp"
+                android:id="@+id/sat_list_view"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="bottom"
         android:layout_weight="1">
 
@@ -163,233 +270,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
-
-    <!--
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ff838383"
-    android:padding="10dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create Schedule"
-        android:textSize="30sp"
-        android:textColor="#ff52b805"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#ff2d2d2d"
-        android:paddingTop="20dp"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        android:layout_weight="8">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sunday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sunday_text_view_create_schedule"
-                android:text=""/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/monday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/monday_text_view_create_schedule"
-                android:text=""/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tuesday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tuesday_text_view_create_schedule"
-                android:text=""/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/wednesday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/wednesday_text_view_create_schedule"
-                android:text=""/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/thursday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/thursday_text_view_create_schedule"
-                android:text=""/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/friday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/friday_text_view_create_schedule"
-                android:text=""/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/saturday_text_view_initial_create_schedule"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/saturday_text_view_create_schedule"
-                android:text=""/>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#ff2d2d2d"
-        android:paddingTop="20dp"/>
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/day_of_week_spinner_create_profile"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="From"
-            android:textSize="25sp"
-            android:layout_weight="1"
-            android:textColor="#ff52b805"
-            android:textStyle="bold"
-            android:id="@+id/from_text_view_create_schedule"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To"
-            android:textSize="25sp"
-            android:layout_weight="1"
-            android:textColor="#ff52b805"
-            android:textStyle="bold"
-            android:id="@+id/to_text_view_create_schedule"/>
-
-        </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/start_time_button_text_create_schedule"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:id="@+id/start_time_button_create_schedule"
-            android:onClick="pickStartTime"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/stop_time_button_text_create_schedule"
-            android:layout_weight="1"
-            android:id="@+id/stop_time_button_create_schedule"
-            android:onClick="pickStopTime"/>
-
-        </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_button_text_create_schedule"
-        android:layout_gravity="center_horizontal"
-        android:onClick="addTimeToSchedule"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/back_button_create_schedule"
-            android:text="Back"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp"
-            android:layout_gravity="center_vertical"
-            android:onClick="returnToCreateProfile"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/next_button_create_schedule"
-            android:text="Done"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:onClick="finishProfile"/>
-
-    </LinearLayout>
-
-</LinearLayout>
-    -->

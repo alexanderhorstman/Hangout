@@ -1,11 +1,14 @@
 package com.example.alexh.hangout;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class Profile implements Serializable{
     private boolean available;
     private boolean online;
-    private boolean[][] schedule;
+    private boolean inGroup;
+    //private Group group;
+    private Schedule schedule;
     private String emailAddress;
     private String firstName;
     private String fullName;
@@ -23,7 +26,7 @@ public class Profile implements Serializable{
         this.password = password;
     }
 
-    public Profile(boolean[][] schedule, String emailAddress, String firstName, String lastName,
+    public Profile(Schedule schedule, String emailAddress, String firstName, String lastName,
                    String password) {
         this.schedule = schedule;
         this.emailAddress = emailAddress;
@@ -33,7 +36,14 @@ public class Profile implements Serializable{
         this.password = password;
     }
 
+    private void checkAvailability(Calendar time) {
+        //check the activity list of the day to see if there is an activity at the given time
+        //set "available" boolean variable accordingly
+    }
+
     public boolean isAvailable() {
+        Calendar time = Calendar.getInstance();
+        checkAvailability(time);
         return available;
     }
 
@@ -41,7 +51,7 @@ public class Profile implements Serializable{
         return online;
     }
 
-    public boolean[][] getSchedule() {
+    public Schedule getSchedule() {
         return schedule;
     }
 
@@ -73,7 +83,7 @@ public class Profile implements Serializable{
         this.online = online;
     }
 
-    public void setSchedule(boolean[][] schedule) {
+    public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
     }
 

@@ -13,16 +13,9 @@ import android.widget.Toast;
 
 public class CreateSchedule extends FragmentActivity {
 
-    private boolean[][] schedule = new boolean[48][7];
     private TimePickerFragment startPickerFragment;
     private TimePickerFragment stopPickerFragment;
-    private ActivityList sunActivityList;
-    private ActivityList monActivityList;
-    private ActivityList tueActivityList;
-    private ActivityList wedActivityList;
-    private ActivityList thuActivityList;
-    private ActivityList friActivityList;
-    private ActivityList satActivityList;
+    private Schedule newSchedule;
     private ListView sunListView;
     private ListView monListView;
     private ListView tueListView;
@@ -77,7 +70,7 @@ public class CreateSchedule extends FragmentActivity {
                 if(indexToBeUpdated != -1) {
                     switch(viewHolder.dayOfWeekTextView.getText().toString()) {
                         case "Sunday":
-                            if(indexToBeUpdated < sunActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.sunActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -87,12 +80,12 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                sunActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.sunActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Sunday");
                             }
                             break;
                         case "Monday":
-                            if(indexToBeUpdated < monActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.monActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -102,12 +95,12 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                monActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.monActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Monday");
                             }
                             break;
                         case "Tuesday":
-                            if(indexToBeUpdated < tueActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.tueActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -117,12 +110,12 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                tueActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.tueActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Tuesday");
                             }
                             break;
                         case "Wednesday":
-                            if(indexToBeUpdated < wedActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.wedActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -132,12 +125,12 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                wedActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.wedActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Wednesday");
                             }
                             break;
                         case "Thursday":
-                            if(indexToBeUpdated < thuActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.thuActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -147,12 +140,12 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                thuActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.thuActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Thursday");
                             }
                             break;
                         case "Friday":
-                            if(indexToBeUpdated < friActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.friActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -162,12 +155,12 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                friActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.friActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Friday");
                             }
                             break;
                         case "Saturday":
-                            if(indexToBeUpdated < satActivityList.getSize()) {
+                            if(indexToBeUpdated < newSchedule.satActivityList.getSize()) {
                                 viewHolder.activityView.setVisibility(View.GONE);
                                 ScheduleActivity newActivity =
                                         new ScheduleActivity(startPickerFragment.getHour(),
@@ -177,7 +170,7 @@ public class CreateSchedule extends FragmentActivity {
                                                 stopPickerFragment.getMinute(),
                                                 stopPickerFragment.getAmPm(),
                                                 viewHolder.descriptionEditText.getText().toString());
-                                satActivityList.replace(indexToBeUpdated, newActivity);
+                                newSchedule.satActivityList.replace(indexToBeUpdated, newActivity);
                                 updateAdapter("Saturday");
                             }
                             break;
@@ -195,31 +188,31 @@ public class CreateSchedule extends FragmentActivity {
                         viewHolder.descriptionEditText.getText().toString());
                 switch(viewHolder.dayOfWeekTextView.getText().toString()) {
                     case "Sunday":
-                        sunActivityList.addActivity(newActivity);
+                        newSchedule.sunActivityList.addActivity(newActivity);
                         updateAdapter("Sunday");
                         break;
                     case "Monday":
-                        monActivityList.addActivity(newActivity);
+                        newSchedule.monActivityList.addActivity(newActivity);
                         updateAdapter("Monday");
                         break;
                     case "Tuesday":
-                        tueActivityList.addActivity(newActivity);
+                        newSchedule.tueActivityList.addActivity(newActivity);
                         updateAdapter("Tuesday");
                         break;
                     case "Wednesday":
-                        wedActivityList.addActivity(newActivity);
+                        newSchedule.wedActivityList.addActivity(newActivity);
                         updateAdapter("Wednesday");
                         break;
                     case "Thursday":
-                        thuActivityList.addActivity(newActivity);
+                        newSchedule.thuActivityList.addActivity(newActivity);
                         updateAdapter("Thursday");
                         break;
                     case "Friday":
-                        friActivityList.addActivity(newActivity);
+                        newSchedule.friActivityList.addActivity(newActivity);
                         updateAdapter("Friday");
                         break;
                     case "Saturday":
-                        satActivityList.addActivity(newActivity);
+                        newSchedule.satActivityList.addActivity(newActivity);
                         updateAdapter("Saturday");
                         break;
                     default:
@@ -242,7 +235,7 @@ public class CreateSchedule extends FragmentActivity {
         convertListViewsToSchedule();
         Intent previousActivity = getIntent();
         Profile newProfile = (Profile) previousActivity.getSerializableExtra("profileInProgress");
-        newProfile.setSchedule(schedule);
+        newProfile.setSchedule(newSchedule);
         //addNewUser();
     }
 
@@ -266,13 +259,14 @@ public class CreateSchedule extends FragmentActivity {
     }
 
     private void initializeAll() {
-        sunActivityList = new ActivityList();
-        monActivityList = new ActivityList();
-        tueActivityList = new ActivityList();
-        wedActivityList = new ActivityList();
-        thuActivityList = new ActivityList();
-        friActivityList = new ActivityList();
-        satActivityList = new ActivityList();
+        newSchedule = new Schedule();
+        newSchedule.sunActivityList = new ActivityList();
+        newSchedule.monActivityList = new ActivityList();
+        newSchedule.tueActivityList = new ActivityList();
+        newSchedule.wedActivityList = new ActivityList();
+        newSchedule.thuActivityList = new ActivityList();
+        newSchedule.friActivityList = new ActivityList();
+        newSchedule.satActivityList = new ActivityList();
         sunListView = (ListView) findViewById(R.id.sun_list_view);
         monListView = (ListView) findViewById(R.id.mon_list_view);
         tueListView = (ListView) findViewById(R.id.tue_list_view);
@@ -280,13 +274,13 @@ public class CreateSchedule extends FragmentActivity {
         thuListView = (ListView) findViewById(R.id.thu_list_view);
         friListView = (ListView) findViewById(R.id.fri_list_view);
         satListView = (ListView) findViewById(R.id.sat_list_view);
-        sunAdapter = new ListAdapter(this, sunActivityList.toStringArray(), sunActivityList);
-        monAdapter = new ListAdapter(this, monActivityList.toStringArray(), monActivityList);
-        tueAdapter = new ListAdapter(this, tueActivityList.toStringArray(), tueActivityList);
-        wedAdapter = new ListAdapter(this, wedActivityList.toStringArray(), wedActivityList);
-        thuAdapter = new ListAdapter(this, thuActivityList.toStringArray(), thuActivityList);
-        friAdapter = new ListAdapter(this, friActivityList.toStringArray(), friActivityList);
-        satAdapter = new ListAdapter(this, satActivityList.toStringArray(), satActivityList);
+        sunAdapter = new ListAdapter(this, newSchedule.sunActivityList.toStringArray(), newSchedule.sunActivityList);
+        monAdapter = new ListAdapter(this, newSchedule.monActivityList.toStringArray(), newSchedule.monActivityList);
+        tueAdapter = new ListAdapter(this, newSchedule.tueActivityList.toStringArray(), newSchedule.tueActivityList);
+        wedAdapter = new ListAdapter(this, newSchedule.wedActivityList.toStringArray(), newSchedule.wedActivityList);
+        thuAdapter = new ListAdapter(this, newSchedule.thuActivityList.toStringArray(), newSchedule.thuActivityList);
+        friAdapter = new ListAdapter(this, newSchedule.friActivityList.toStringArray(), newSchedule.friActivityList);
+        satAdapter = new ListAdapter(this, newSchedule.satActivityList.toStringArray(), newSchedule.satActivityList);
         sunListView.setAdapter(sunAdapter);
         monListView.setAdapter(monAdapter);
         tueListView.setAdapter(tueAdapter);
@@ -301,7 +295,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Sunday");
-                if(sunActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.sunActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -309,30 +303,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(sunActivityList.getActivity(position).getDescription());
-                    if(sunActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.sunActivityList.getActivity(position).getDescription());
+                    if(newSchedule.sunActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                sunActivityList.getActivity(position).getStartHour() + ":0"
-                                        + sunActivityList.getActivity(position).getStartMinute()
-                                        + sunActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.sunActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.sunActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                sunActivityList.getActivity(position).getStartHour() + ":"
-                                        + sunActivityList.getActivity(position).getStartMinute()
-                                        + sunActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.sunActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.sunActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(sunActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.sunActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                sunActivityList.getActivity(position).getStopHour() + ":0"
-                                        + sunActivityList.getActivity(position).getStopMinute()
-                                        + sunActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.sunActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.sunActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                sunActivityList.getActivity(position).getStopHour() + ":"
-                                        + sunActivityList.getActivity(position).getStopMinute()
-                                        + sunActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.sunActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.sunActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -352,7 +346,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Monday");
-                if(monActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.monActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -360,30 +354,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(monActivityList.getActivity(position).getDescription());
-                    if(monActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.monActivityList.getActivity(position).getDescription());
+                    if(newSchedule.monActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                monActivityList.getActivity(position).getStartHour() + ":0"
-                                        + monActivityList.getActivity(position).getStartMinute()
-                                        + monActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.monActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.monActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.monActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                monActivityList.getActivity(position).getStartHour() + ":"
-                                        + monActivityList.getActivity(position).getStartMinute()
-                                        + monActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.monActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.monActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.monActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(monActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.monActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                monActivityList.getActivity(position).getStopHour() + ":0"
-                                        + monActivityList.getActivity(position).getStopMinute()
-                                        + monActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.monActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.monActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.monActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                monActivityList.getActivity(position).getStopHour() + ":"
-                                        + monActivityList.getActivity(position).getStopMinute()
-                                        + monActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.monActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.monActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.monActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -403,7 +397,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Tuesday");
-                if(tueActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.tueActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -411,30 +405,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(tueActivityList.getActivity(position).getDescription());
-                    if(tueActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.tueActivityList.getActivity(position).getDescription());
+                    if(newSchedule.tueActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                tueActivityList.getActivity(position).getStartHour() + ":0"
-                                        + tueActivityList.getActivity(position).getStartMinute()
-                                        + tueActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.tueActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.tueActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.tueActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                tueActivityList.getActivity(position).getStartHour() + ":"
-                                        + tueActivityList.getActivity(position).getStartMinute()
-                                        + tueActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.tueActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.tueActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.tueActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(tueActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.tueActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                tueActivityList.getActivity(position).getStopHour() + ":0"
-                                        + tueActivityList.getActivity(position).getStopMinute()
-                                        + tueActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.tueActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.tueActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.tueActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                tueActivityList.getActivity(position).getStopHour() + ":"
-                                        + tueActivityList.getActivity(position).getStopMinute()
-                                        + tueActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.tueActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.tueActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.tueActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -454,7 +448,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Wednesday");
-                if(wedActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.wedActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -462,30 +456,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(wedActivityList.getActivity(position).getDescription());
-                    if(wedActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.wedActivityList.getActivity(position).getDescription());
+                    if(newSchedule.wedActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                wedActivityList.getActivity(position).getStartHour() + ":0"
-                                        + wedActivityList.getActivity(position).getStartMinute()
-                                        + wedActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.wedActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.wedActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.wedActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                wedActivityList.getActivity(position).getStartHour() + ":"
-                                        + wedActivityList.getActivity(position).getStartMinute()
-                                        + wedActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.wedActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.wedActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.wedActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(wedActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.wedActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                wedActivityList.getActivity(position).getStopHour() + ":0"
-                                        + wedActivityList.getActivity(position).getStopMinute()
-                                        + wedActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.wedActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.wedActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.wedActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                wedActivityList.getActivity(position).getStopHour() + ":"
-                                        + wedActivityList.getActivity(position).getStopMinute()
-                                        + wedActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.wedActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.wedActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.wedActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -505,7 +499,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Thursday");
-                if(thuActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.thuActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -513,30 +507,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(thuActivityList.getActivity(position).getDescription());
-                    if(thuActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.thuActivityList.getActivity(position).getDescription());
+                    if(newSchedule.thuActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                thuActivityList.getActivity(position).getStartHour() + ":0"
-                                        + thuActivityList.getActivity(position).getStartMinute()
-                                        + thuActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.thuActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.thuActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.thuActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                thuActivityList.getActivity(position).getStartHour() + ":"
-                                        + thuActivityList.getActivity(position).getStartMinute()
-                                        + thuActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.thuActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.thuActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.thuActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(thuActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.thuActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                thuActivityList.getActivity(position).getStopHour() + ":0"
-                                        + thuActivityList.getActivity(position).getStopMinute()
-                                        + thuActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.thuActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.thuActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.thuActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                thuActivityList.getActivity(position).getStopHour() + ":"
-                                        + thuActivityList.getActivity(position).getStopMinute()
-                                        + thuActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.thuActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.thuActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.thuActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -556,7 +550,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Friday");
-                if(friActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.friActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -564,30 +558,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(friActivityList.getActivity(position).getDescription());
-                    if(friActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.friActivityList.getActivity(position).getDescription());
+                    if(newSchedule.friActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                friActivityList.getActivity(position).getStartHour() + ":0"
-                                        + friActivityList.getActivity(position).getStartMinute()
-                                        + friActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.friActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.friActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.friActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                friActivityList.getActivity(position).getStartHour() + ":"
-                                        + friActivityList.getActivity(position).getStartMinute()
-                                        + friActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.friActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.friActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.friActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(friActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.friActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                friActivityList.getActivity(position).getStopHour() + ":0"
-                                        + friActivityList.getActivity(position).getStopMinute()
-                                        + friActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.friActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.friActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.friActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                friActivityList.getActivity(position).getStopHour() + ":"
-                                        + friActivityList.getActivity(position).getStopMinute()
-                                        + friActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.friActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.friActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.friActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -607,7 +601,7 @@ public class CreateSchedule extends FragmentActivity {
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
                 TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Saturday");
-                if(satActivityList.getActivity(position).getDescription().equals("default")) {
+                if(newSchedule.satActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
                     viewHolder.startButton.setText("Start Time");
                     viewHolder.stopButton.setText("Stop Time");
@@ -615,30 +609,30 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(satActivityList.getActivity(position).getDescription());
-                    if(satActivityList.getActivity(position).getStartMinute() < 10) {
+                    viewHolder.descriptionEditText.setText(newSchedule.satActivityList.getActivity(position).getDescription());
+                    if(newSchedule.satActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
-                                satActivityList.getActivity(position).getStartHour() + ":0"
-                                        + satActivityList.getActivity(position).getStartMinute()
-                                        + satActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.satActivityList.getActivity(position).getStartHour() + ":0"
+                                        + newSchedule.satActivityList.getActivity(position).getStartMinute()
+                                        +newSchedule. satActivityList.getActivity(position).getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
-                                satActivityList.getActivity(position).getStartHour() + ":"
-                                        + satActivityList.getActivity(position).getStartMinute()
-                                        + satActivityList.getActivity(position).getStartAmPm());
+                                newSchedule.satActivityList.getActivity(position).getStartHour() + ":"
+                                        + newSchedule.satActivityList.getActivity(position).getStartMinute()
+                                        + newSchedule.satActivityList.getActivity(position).getStartAmPm());
                     }
-                    if(satActivityList.getActivity(position).getStopMinute() < 10) {
+                    if(newSchedule.satActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
-                                satActivityList.getActivity(position).getStopHour() + ":0"
-                                        + satActivityList.getActivity(position).getStopMinute()
-                                        + satActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.satActivityList.getActivity(position).getStopHour() + ":0"
+                                        + newSchedule.satActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.satActivityList.getActivity(position).getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
-                                satActivityList.getActivity(position).getStopHour() + ":"
-                                        + satActivityList.getActivity(position).getStopMinute()
-                                        + satActivityList.getActivity(position).getStopAmPm());
+                                newSchedule.satActivityList.getActivity(position).getStopHour() + ":"
+                                        + newSchedule.satActivityList.getActivity(position).getStopMinute()
+                                        + newSchedule.satActivityList.getActivity(position).getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -665,37 +659,37 @@ public class CreateSchedule extends FragmentActivity {
     private void updateAdapter(String dayOfWeek) {
         switch(dayOfWeek) {
             case "Sunday":
-                sunAdapter = new ListAdapter(this, sunActivityList.toStringArray(), sunActivityList);
+                sunAdapter = new ListAdapter(this,newSchedule.sunActivityList.toStringArray(), newSchedule.sunActivityList);
                 sunListView.setAdapter(sunAdapter);
                 sunListView.refreshDrawableState();
                 break;
             case "Monday":
-                monAdapter = new ListAdapter(this, monActivityList.toStringArray(), monActivityList);
+                monAdapter = new ListAdapter(this, newSchedule.monActivityList.toStringArray(), newSchedule.monActivityList);
                 monListView.setAdapter(monAdapter);
                 monListView.refreshDrawableState();
                 break;
             case "Tuesday":
-                tueAdapter = new ListAdapter(this, tueActivityList.toStringArray(), tueActivityList);
+                tueAdapter = new ListAdapter(this, newSchedule.tueActivityList.toStringArray(), newSchedule.tueActivityList);
                 tueListView.setAdapter(tueAdapter);
                 tueListView.refreshDrawableState();
                 break;
             case "Wednesday":
-                wedAdapter = new ListAdapter(this, wedActivityList.toStringArray(), wedActivityList);
+                wedAdapter = new ListAdapter(this, newSchedule.wedActivityList.toStringArray(), newSchedule.wedActivityList);
                 wedListView.setAdapter(wedAdapter);
                 wedListView.refreshDrawableState();
                 break;
             case "Thursday":
-                thuAdapter = new ListAdapter(this, thuActivityList.toStringArray(), thuActivityList);
+                thuAdapter = new ListAdapter(this, newSchedule.thuActivityList.toStringArray(), newSchedule.thuActivityList);
                 thuListView.setAdapter(thuAdapter);
                 thuListView.refreshDrawableState();
                 break;
             case "Friday":
-                friAdapter = new ListAdapter(this, friActivityList.toStringArray(), friActivityList);
+                friAdapter = new ListAdapter(this, newSchedule.friActivityList.toStringArray(), newSchedule.friActivityList);
                 friListView.setAdapter(friAdapter);
                 friListView.refreshDrawableState();
                 break;
             case "Saturday":
-                satAdapter = new ListAdapter(this, satActivityList.toStringArray(), satActivityList);
+                satAdapter = new ListAdapter(this, newSchedule.satActivityList.toStringArray(), newSchedule.satActivityList);
                 satListView.setAdapter(satAdapter);
                 satListView.refreshDrawableState();
                 break;

@@ -1,5 +1,6 @@
 package com.example.alexh.hangout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class CreateSchedule extends FragmentActivity {
 
@@ -32,6 +39,7 @@ public class CreateSchedule extends FragmentActivity {
     private ListAdapter satAdapter;
     private ViewHolder viewHolder;
     private int indexToBeUpdated = -1;
+    private String usersFileName = "users.txt";
 
     @Override
     public void onBackPressed() {
@@ -222,21 +230,71 @@ public class CreateSchedule extends FragmentActivity {
         }
     }
 
+    private boolean addNewUser(Profile newProfile) {
+        try {
+            ObjectInputStream objectInputStream =
+                    new ObjectInputStream(openFileInput(usersFileName));
+            ArrayList<Profile> users = (ArrayList) objectInputStream.readObject();
+            objectInputStream.close();
+            users.add(newProfile);
+            ObjectOutputStream objectOutputStream =
+                    new ObjectOutputStream(openFileOutput(usersFileName, Context.MODE_PRIVATE));
+            objectOutputStream.writeObject(users);
+            objectOutputStream.close();
+        }
+        catch(FileNotFoundException e) {
+            //create new file
+            File usersFile = new File(this.getFilesDir().getAbsolutePath(), usersFileName);
+            //try to create a new file, quit if system cannot create new file
+            try {
+                usersFile.createNewFile();
+            }
+            catch (Exception f) {
+                Toast.makeText(this, "The users file could not be created. Shutting down.",
+                        Toast.LENGTH_LONG).show();
+                try {
+                    wait(2000);
+                } catch (Exception g) {
+                    g.printStackTrace();
+                }
+                finish();
+            }
+            try {
+                ArrayList<Profile> users = new ArrayList<>();
+                users.add(newProfile);
+                ObjectOutputStream objectOutputStream =
+                        new ObjectOutputStream(openFileOutput(usersFileName, Context.MODE_PRIVATE));
+                objectOutputStream.writeObject(users);
+                objectOutputStream.close();
+            }
+            catch(Exception a) {
+                a.printStackTrace();
+                return false;
+            }
+        }
+        catch(Exception g) {
+            g.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
     public void cancelNewActivity(View view) {
         viewHolder.activityView.setVisibility(View.GONE);
     }
 
-    public void convertListViewsToSchedule() {
-
-    }
-
     public void finishProfile(View view) {
         //do stuff to create and save a profile
-        convertListViewsToSchedule();
         Intent previousActivity = getIntent();
         Profile newProfile = (Profile) previousActivity.getSerializableExtra("profileInProgress");
         newProfile.setSchedule(newSchedule);
-        //addNewUser();
+        if(addNewUser(newProfile)) {
+            setResult(RESULT_OK);
+            finish();
+        }
+        else {
+            makeToast("Profile could not be created at this time. Try again later.", true);
+        }
     }
 
     public void pickStartTime(View v) {
@@ -274,13 +332,20 @@ public class CreateSchedule extends FragmentActivity {
         thuListView = (ListView) findViewById(R.id.thu_list_view);
         friListView = (ListView) findViewById(R.id.fri_list_view);
         satListView = (ListView) findViewById(R.id.sat_list_view);
-        sunAdapter = new ListAdapter(this, newSchedule.sunActivityList.toStringArray(), newSchedule.sunActivityList);
-        monAdapter = new ListAdapter(this, newSchedule.monActivityList.toStringArray(), newSchedule.monActivityList);
-        tueAdapter = new ListAdapter(this, newSchedule.tueActivityList.toStringArray(), newSchedule.tueActivityList);
-        wedAdapter = new ListAdapter(this, newSchedule.wedActivityList.toStringArray(), newSchedule.wedActivityList);
-        thuAdapter = new ListAdapter(this, newSchedule.thuActivityList.toStringArray(), newSchedule.thuActivityList);
-        friAdapter = new ListAdapter(this, newSchedule.friActivityList.toStringArray(), newSchedule.friActivityList);
-        satAdapter = new ListAdapter(this, newSchedule.satActivityList.toStringArray(), newSchedule.satActivityList);
+        sunAdapter = new ListAdapter(this, newSchedule.sunActivityList.toStringArray(),
+                newSchedule.sunActivityList);
+        monAdapter = new ListAdapter(this, newSchedule.monActivityList.toStringArray(),
+                newSchedule.monActivityList);
+        tueAdapter = new ListAdapter(this, newSchedule.tueActivityList.toStringArray(),
+                newSchedule.tueActivityList);
+        wedAdapter = new ListAdapter(this, newSchedule.wedActivityList.toStringArray(),
+                newSchedule.wedActivityList);
+        thuAdapter = new ListAdapter(this, newSchedule.thuActivityList.toStringArray(),
+                newSchedule.thuActivityList);
+        friAdapter = new ListAdapter(this, newSchedule.friActivityList.toStringArray(),
+                newSchedule.friActivityList);
+        satAdapter = new ListAdapter(this, newSchedule.satActivityList.toStringArray(),
+                newSchedule.satActivityList);
         sunListView.setAdapter(sunAdapter);
         monListView.setAdapter(monAdapter);
         tueListView.setAdapter(tueAdapter);
@@ -293,7 +358,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Sunday");
                 if(newSchedule.sunActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -303,30 +369,39 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.sunActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.sunActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.sunActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.sunActivityList.getActivity(position).getStartHour() + ":0"
-                                        + newSchedule.sunActivityList.getActivity(position).getStartMinute()
-                                        + newSchedule.sunActivityList.getActivity(position).getStartAmPm());
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStartMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStartAmPm());
                     }
                     else {
                         viewHolder.startButton.setText(
                                 newSchedule.sunActivityList.getActivity(position).getStartHour() + ":"
-                                        + newSchedule.sunActivityList.getActivity(position).getStartMinute()
-                                        + newSchedule.sunActivityList.getActivity(position).getStartAmPm());
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStartMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStartAmPm());
                     }
                     if(newSchedule.sunActivityList.getActivity(position).getStopMinute() < 10) {
                         viewHolder.stopButton.setText(
                                 newSchedule.sunActivityList.getActivity(position).getStopHour() + ":0"
-                                        + newSchedule.sunActivityList.getActivity(position).getStopMinute()
-                                        + newSchedule.sunActivityList.getActivity(position).getStopAmPm());
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStopMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStopAmPm());
                     }
                     else {
                         viewHolder.stopButton.setText(
                                 newSchedule.sunActivityList.getActivity(position).getStopHour() + ":"
-                                        + newSchedule.sunActivityList.getActivity(position).getStopMinute()
-                                        + newSchedule.sunActivityList.getActivity(position).getStopAmPm());
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStopMinute()
+                                        + newSchedule.sunActivityList.getActivity(position).
+                                        getStopAmPm());
                     }
                     viewHolder.addButton.setText("Update");
                     indexToBeUpdated = position;
@@ -344,7 +419,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Monday");
                 if(newSchedule.monActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -354,7 +430,8 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.monActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.monActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.monActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.monActivityList.getActivity(position).getStartHour() + ":0"
@@ -395,7 +472,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Tuesday");
                 if(newSchedule.tueActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -405,7 +483,8 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.tueActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.tueActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.tueActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.tueActivityList.getActivity(position).getStartHour() + ":0"
@@ -446,7 +525,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Wednesday");
                 if(newSchedule.wedActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -456,7 +536,8 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.wedActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.wedActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.wedActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.wedActivityList.getActivity(position).getStartHour() + ":0"
@@ -497,7 +578,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Thursday");
                 if(newSchedule.thuActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -507,7 +589,8 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.thuActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.thuActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.thuActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.thuActivityList.getActivity(position).getStartHour() + ":0"
@@ -548,7 +631,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Friday");
                 if(newSchedule.friActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -558,7 +642,8 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.friActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.friActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.friActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.friActivityList.getActivity(position).getStartHour() + ":0"
@@ -599,7 +684,8 @@ public class CreateSchedule extends FragmentActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //pull up create activity fragment
                 View activityFragmentView = findViewById(R.id.create_activity_fragment);
-                TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+                TextView dayOfWeekTextView =
+                        (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
                 dayOfWeekTextView.setText("Saturday");
                 if(newSchedule.satActivityList.getActivity(position).getDescription().equals("default")) {
                     viewHolder.descriptionEditText.setText("");
@@ -609,7 +695,8 @@ public class CreateSchedule extends FragmentActivity {
                     indexToBeUpdated = -1;
                 }
                 else {
-                    viewHolder.descriptionEditText.setText(newSchedule.satActivityList.getActivity(position).getDescription());
+                    viewHolder.descriptionEditText.setText(newSchedule.satActivityList.
+                            getActivity(position).getDescription());
                     if(newSchedule.satActivityList.getActivity(position).getStartMinute() < 10) {
                         viewHolder.startButton.setText(
                                 newSchedule.satActivityList.getActivity(position).getStartHour() + ":0"
@@ -659,37 +746,44 @@ public class CreateSchedule extends FragmentActivity {
     private void updateAdapter(String dayOfWeek) {
         switch(dayOfWeek) {
             case "Sunday":
-                sunAdapter = new ListAdapter(this,newSchedule.sunActivityList.toStringArray(), newSchedule.sunActivityList);
+                sunAdapter = new ListAdapter(this,newSchedule.sunActivityList.toStringArray(),
+                        newSchedule.sunActivityList);
                 sunListView.setAdapter(sunAdapter);
                 sunListView.refreshDrawableState();
                 break;
             case "Monday":
-                monAdapter = new ListAdapter(this, newSchedule.monActivityList.toStringArray(), newSchedule.monActivityList);
+                monAdapter = new ListAdapter(this, newSchedule.monActivityList.toStringArray(),
+                        newSchedule.monActivityList);
                 monListView.setAdapter(monAdapter);
                 monListView.refreshDrawableState();
                 break;
             case "Tuesday":
-                tueAdapter = new ListAdapter(this, newSchedule.tueActivityList.toStringArray(), newSchedule.tueActivityList);
+                tueAdapter = new ListAdapter(this, newSchedule.tueActivityList.toStringArray(),
+                        newSchedule.tueActivityList);
                 tueListView.setAdapter(tueAdapter);
                 tueListView.refreshDrawableState();
                 break;
             case "Wednesday":
-                wedAdapter = new ListAdapter(this, newSchedule.wedActivityList.toStringArray(), newSchedule.wedActivityList);
+                wedAdapter = new ListAdapter(this, newSchedule.wedActivityList.toStringArray(),
+                        newSchedule.wedActivityList);
                 wedListView.setAdapter(wedAdapter);
                 wedListView.refreshDrawableState();
                 break;
             case "Thursday":
-                thuAdapter = new ListAdapter(this, newSchedule.thuActivityList.toStringArray(), newSchedule.thuActivityList);
+                thuAdapter = new ListAdapter(this, newSchedule.thuActivityList.toStringArray(),
+                        newSchedule.thuActivityList);
                 thuListView.setAdapter(thuAdapter);
                 thuListView.refreshDrawableState();
                 break;
             case "Friday":
-                friAdapter = new ListAdapter(this, newSchedule.friActivityList.toStringArray(), newSchedule.friActivityList);
+                friAdapter = new ListAdapter(this, newSchedule.friActivityList.toStringArray(),
+                        newSchedule.friActivityList);
                 friListView.setAdapter(friAdapter);
                 friListView.refreshDrawableState();
                 break;
             case "Saturday":
-                satAdapter = new ListAdapter(this, newSchedule.satActivityList.toStringArray(), newSchedule.satActivityList);
+                satAdapter = new ListAdapter(this, newSchedule.satActivityList.toStringArray(),
+                        newSchedule.satActivityList);
                 satListView.setAdapter(satAdapter);
                 satListView.refreshDrawableState();
                 break;
@@ -700,8 +794,10 @@ public class CreateSchedule extends FragmentActivity {
 
     private class ViewHolder {
         View activityView = findViewById(R.id.create_activity_fragment);
-        TextView dayOfWeekTextView = (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
-        EditText descriptionEditText = (EditText) findViewById(R.id.description_edit_text_create_activity);
+        TextView dayOfWeekTextView =
+                (TextView) findViewById(R.id.day_of_week_text_view_create_activity_fragment);
+        EditText descriptionEditText =
+                (EditText) findViewById(R.id.description_edit_text_create_activity);
         Button startButton = (Button) findViewById(R.id.start_time_button_create_activity_fragment);
         Button stopButton = (Button) findViewById(R.id.stop_time_button_create_activity_fragment);
         Button addButton = (Button) findViewById(R.id.add_button_create_activity_fragment);

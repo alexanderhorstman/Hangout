@@ -13,13 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 
 public class MainActivity extends Activity {
 
+    ViewHolder holder;
+    String usersFileName = "users.txt";
+
     public void createNewAccount(View view) {
+        holder = new ViewHolder();
         Button createNewAccountButton = (Button) findViewById(R.id.create_new_account_button);
         createNewAccountButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -91,6 +96,44 @@ public class MainActivity extends Activity {
     }
 
     public void signInAttempt(View view) {
+        ArrayList<Profile> users = new ArrayList<>();
+        boolean success = false;
+        try {
+            ObjectInputStream objectInputStream =
+                    new ObjectInputStream(openFileInput(usersFileName));
+            users = (ArrayList) objectInputStream.readObject();
+            objectInputStream.close();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        int index = 0;
+        while(index < users.size() && !success) {
+            Profile profile = users.get(index);
+            if(profile.getEmailAddress().equals(holder.emailAddressEditText.getText().toString())) {
+                if(profile.getPassword().equals(holder.passwordEditText.getText().toString())) {
+                    success = true;
+                }
+                else {
+                    success = false;
+                }
+            }
+            else {
+                success = false;
+            }
+            index++;
+        }
+        if(success) {
+
+        }
+        else {
+            Toast.makeText(this, "Email or password is incorrect. Try again.", Toast.LENGTH_SHORT).show();
+        }
         Toast.makeText(this, "Sign in", Toast.LENGTH_SHORT).show();
+    }
+
+    private class ViewHolder {
+        EditText emailAddressEditText = (EditText) findViewById(R.id.email_edit_text_sign_in);
+        EditText passwordEditText = (EditText) findViewById(R.id.password_edit_text_sign_in);
     }
 }

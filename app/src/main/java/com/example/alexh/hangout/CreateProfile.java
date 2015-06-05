@@ -99,6 +99,9 @@ public class CreateProfile extends Activity{
         else if(holder.lastNameEditText.getText().toString().equals("")) {
             Toast.makeText(this, "Last name cannot be blank", Toast.LENGTH_LONG).show();
         }
+        else if(holder.emailEditText.getText().toString().equals("")) {
+            Toast.makeText(this, "Email address cannot be blank", Toast.LENGTH_LONG).show();
+        }
         else if(!checkEmailAvailability(holder.emailEditText.getText().toString())) {
             Toast.makeText(this, "Email address has already been used. Please use a different "
                     + "email.", Toast.LENGTH_LONG).show();
@@ -120,18 +123,6 @@ public class CreateProfile extends Activity{
             createSchedule.putExtra("profileInProgress", newProfile);
             startActivity(createSchedule);
         }
-    }
-
-    private boolean saveUsersToFile() {
-        try {
-            usersOutput = new ObjectOutputStream(openFileOutput(usersFileName, Context.MODE_PRIVATE));
-            usersOutput.writeObject(users);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
     }
 
     public class ViewHolder {
